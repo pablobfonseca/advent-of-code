@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type DiskElement interface{}
+type DiskElement any
 
 type File struct {
 	id   string
