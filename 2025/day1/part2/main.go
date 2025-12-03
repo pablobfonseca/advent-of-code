@@ -34,26 +34,20 @@ func main() {
 			log.Fatalf("Failed to parse input: %v", err)
 		}
 
-		dialPosition = rotateDial(dialPosition, distance, direction)
+		step := 1
+		if direction == "L" {
+			step = -1
+		}
 
-		if dialPosition == 0 {
-			zeroCount += 1
+		for i := 1; i <= distance; i++ {
+			dialPosition = ((dialPosition+step)%DialSize + DialSize) % DialSize
+			if dialPosition == 0 {
+				zeroCount++
+			}
 		}
 	}
 
 	fmt.Printf("Zero Count: %d\n", zeroCount)
-}
-
-func rotateDial(position, distance int, direction string) int {
-	switch direction {
-	case "L":
-		position -= distance
-	case "R":
-		position += distance
-	}
-
-	return ((position % DialSize) + DialSize) % DialSize
-
 }
 
 func parseDirection(line string) (direction string, value int, err error) {
